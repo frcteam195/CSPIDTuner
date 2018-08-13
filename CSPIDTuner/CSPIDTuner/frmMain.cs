@@ -15,6 +15,7 @@ using LiveCharts.WinForms; //the WinForm wrappers
 using System.Windows.Media;
 using System.Threading;
 using SharpOSC;
+using System.Diagnostics;
 
 namespace CSPIDTuner
 {
@@ -23,10 +24,11 @@ namespace CSPIDTuner
         private const int PORT = 5800; 
 
         private bool runThread = true;
-        private static Mutex messageMutex = new Mutex();
         private ConstrainedGearedValues<double> actualPoints = new ConstrainedGearedValues<double>(100);
         private ConstrainedGearedValues<double> requestedPoints = new ConstrainedGearedValues<double>(100);
-        private Queue<OscMessage> messageQueue = new Queue<OscMessage>();
+
+        private int sleepRate = 0;
+        private long messageCounter = 0;
 
         private void frmMain_Load(object sender, EventArgs e)
         {
@@ -35,31 +37,17 @@ namespace CSPIDTuner
             {
                 var listener = new UDPListener(PORT);
                 OscMessage messageReceived = null;
-            
+
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
                 while (runThread == true)
                 {
+                    /**
+                     * Tuning Packet Descriptor
+                     * Actual Value, Requested Value, IAccum
+                     */
                     messageReceived = (OscMessage)listener.Receive();
-                    if (messageReceived != null)
-                    {
-                        messageMutex.WaitOne();
-                        messageQueue.Enqueue(messageReceived);
-                        messageMutex.ReleaseMutex();
-                    }
-                }
-
-                listener.Close();
-            }).Start();
-
-            new Thread(() =>
-            {
-                while (runThread == true)
-                {
-                    OscMessage messageReceived = null;
-                    messageMutex.WaitOne();
-                    if (messageQueue.Count > 0)
-                        messageReceived = messageQueue.Dequeue();
-                    messageMutex.ReleaseMutex();
-
                     if (messageReceived != null)
                     {
                         switch (messageReceived.Address)
@@ -71,8 +59,29 @@ namespace CSPIDTuner
                             default:
                                 break;
                         }
+
+                        messageCounter++;
+
+                        if (stopWatch.ElapsedMilliseconds > 200)
+                        {
+                            //Update TextBox UI Every 200ms to avoid slowing down the app
+                            //txtActualVal.Invoke((MethodInvoker)delegate { textBox.Text = newValue; });
+
+                            if (messageCounter > 200)
+                                sleepRate = 0;
+                            else
+                                sleepRate = (int) ((200.0 / messageCounter) / 2.0);
+                            messageCounter = 0;
+                            stopWatch.Restart();
+                        }
+
                     }
+
+                    if (sleepRate != 0)
+                        Thread.Sleep(sleepRate);
                 }
+
+                listener.Close();
             }).Start();
 
             pidChart.Hoverable = false;
@@ -120,6 +129,16 @@ namespace CSPIDTuner
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             runThread = false;
+        }
+
+        private void cmdApply_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdResetAverage_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

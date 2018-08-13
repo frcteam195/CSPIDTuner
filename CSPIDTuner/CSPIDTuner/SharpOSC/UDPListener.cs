@@ -144,18 +144,30 @@ namespace SharpOSC
 		{
 			if (closing) throw new Exception("UDPListener has been closed.");
 
-			lock (queue)
-			{
-				if (queue.Count() > 0)
-				{
-					byte[] bytes = queue.Dequeue();
-					var packet = OscPacket.GetPacket(bytes);
-					return packet;
-				}
-				else
-					return null;
-			}
-		}
+            if (OscPacketCallback != null)
+                lock (queue)
+                {
+                    if (queue.Count > 0)
+                    {
+                        byte[] bytes = queue.Dequeue();
+                        var packet = OscPacket.GetPacket(bytes);
+                        return packet;
+                    }
+                    else
+                        return null;
+                }
+            else
+            {
+                if (queue.Count > 0)
+                {
+                    byte[] bytes = queue.Dequeue();
+                    var packet = OscPacket.GetPacket(bytes);
+                    return packet;
+                }
+                else
+                    return null;
+            }
+        }
 
 		public byte[] ReceiveBytes()
 		{
