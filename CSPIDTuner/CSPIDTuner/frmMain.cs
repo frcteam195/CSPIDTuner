@@ -29,6 +29,7 @@ namespace CSPIDTuner
         private ConstrainedGearedValues<double> requestedPoints = new ConstrainedGearedValues<double>(100);
         private MovingAverage averageError = new MovingAverage(20);
         private UDPSender oscSender;
+        private bool initCompleted = false;
 
 
         private int sleepRate = 0;
@@ -52,20 +53,27 @@ namespace CSPIDTuner
                      * Tuning Packet Descriptor
                      * Actual Value, Requested Value, IAccum, System Name
                      */
+                    if (!initCompleted)
+                    {
+                        //Initialize the connection
+                        sendIAccumReset();
+                        initCompleted = true;
+                    }
+
                     messageReceived = (OscMessage)listener.Receive();
                     if (messageReceived != null)
                     {
                         switch (messageReceived.Address)
                         {
                             case "/PIDData":
-                                double actualVal = (double)(float)messageReceived.Arguments[0];
-                                double requestedVal = (double)(float)messageReceived.Arguments[1];
+                                double actualVal = (double)messageReceived.Arguments[0];
+                                double requestedVal = (double)messageReceived.Arguments[1];
                                 actualPoints.Add(actualVal);
                                 requestedPoints.Add(requestedVal);
                                 if (stopWatch.ElapsedMilliseconds > 200)
                                 {
                                     //Update TextBox UI Every 200ms to avoid slowing down the app
-                                    double iAccum = (double)(float)messageReceived.Arguments[2];
+                                    double iAccum = (double)messageReceived.Arguments[2];
                                     double err = requestedVal - actualVal;
                                     averageError.AddNumber(err);
                                     txtActualVal.Invoke((MethodInvoker)delegate { txtActualVal.Text = actualVal.ToString("0.####"); });
@@ -92,7 +100,7 @@ namespace CSPIDTuner
                         messageCounter++;
                     }
 
-                    if (sleepRate != 0)
+                    if (sleepRate > 0)
                         Thread.Sleep(sleepRate);
                 }
 
@@ -164,7 +172,7 @@ namespace CSPIDTuner
         private void cmdApply_Click(object sender, EventArgs e)
         {
             var message = new OscMessage("/PIDUpdate", 
-                (double) numkP.Value,
+                (double)numkP.Value,
                 (double)numkI.Value,
                 (double)numkD.Value,
                 (double)numkF.Value,
@@ -178,7 +186,17 @@ namespace CSPIDTuner
 
         private void cmdClearIAccum_Click(object sender, EventArgs e)
         {
-            var message = new OscMessage("/IReset", 0);
+            sendIAccumReset();
+        }
+
+        private void sendIAccumReset()
+        {
+            sendIAccumReset(0);
+        }
+
+        private void sendIAccumReset(double sendVal)
+        {
+            var message = new OscMessage("/IReset", sendVal);
             oscSender.Send(message);
         }
     }
