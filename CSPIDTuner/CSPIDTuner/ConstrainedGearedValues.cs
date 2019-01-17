@@ -13,7 +13,7 @@ namespace CSPIDTuner
     {
         private int maxSize;
 
-        public ConstrainedGearedValues(int maxSize)
+        public ConstrainedGearedValues(int maxSize) : base()
         {
             this.maxSize = maxSize;
         }

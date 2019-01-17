@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,9 @@ namespace CSPIDTuner
         public int selectedPort { get; private set; }
         public string ipAddress { get; private set; }
 
+        private static RegistryKey SoftwareKey = Registry.CurrentUser.CreateSubKey("Software");
+        private static RegistryKey ManufacturerKey = SoftwareKey.CreateSubKey(Application.CompanyName);
+
         public frmSettings()
         {
             InitializeComponent();
@@ -24,6 +28,12 @@ namespace CSPIDTuner
         {
             selectedPort = (int)numPort.Value;
             ipAddress = txtIPAddress.Text;
+
+            using (RegistryKey Settings = ManufacturerKey.CreateSubKey(Application.ProductName))
+            {
+                Settings.SetValue("IPAddress", ipAddress);
+                Settings.SetValue("SelectedPort", selectedPort);
+            }
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
@@ -32,6 +42,36 @@ namespace CSPIDTuner
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void frmSettings_Load(object sender, EventArgs e)
+        {
+            using (RegistryKey Settings = ManufacturerKey.CreateSubKey(Application.ProductName))
+            {
+                if (Settings != null)
+                {
+                    string[] vals = Settings.GetValueNames();
+                    foreach (string s in vals)
+                    {
+                        try
+                        {
+                            if (s == "IPAddress")
+                            {
+                                txtIPAddress.Text = Settings.GetValue(s).ToString();
+                            }
+                            else if (s == "SelectedPort")
+                            {
+                                numPort.Value = Convert.ToInt32(Settings.GetValue(s).ToString());
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+
+                }
+            }
         }
     }
 }

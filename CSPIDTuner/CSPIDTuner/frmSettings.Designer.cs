@@ -53,7 +53,7 @@
             0});
             this.numPort.Name = "numPort";
             this.numPort.Size = new System.Drawing.Size(120, 31);
-            this.numPort.TabIndex = 0;
+            this.numPort.TabIndex = 1;
             this.numPort.Value = new decimal(new int[] {
             5801,
             0,
@@ -96,7 +96,7 @@
             this.txtIPAddress.Location = new System.Drawing.Point(95, 56);
             this.txtIPAddress.Name = "txtIPAddress";
             this.txtIPAddress.Size = new System.Drawing.Size(260, 31);
-            this.txtIPAddress.TabIndex = 4;
+            this.txtIPAddress.TabIndex = 0;
             this.txtIPAddress.Text = "10.1.95.2";
             this.txtIPAddress.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -134,6 +134,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Setup Communication:";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.frmSettings_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

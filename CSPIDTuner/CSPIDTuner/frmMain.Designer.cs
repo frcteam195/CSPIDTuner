@@ -31,12 +31,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.pidChart = new LiveCharts.WinForms.CartesianChart();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cmdConnect = new System.Windows.Forms.Button();
             this.cmdClearIAccum = new System.Windows.Forms.Button();
             this.cmdApply = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.numSetpoint = new System.Windows.Forms.NumericUpDown();
+            this.numMaxIAccum = new System.Windows.Forms.NumericUpDown();
             this.label13 = new System.Windows.Forms.Label();
             this.numIZone = new System.Windows.Forms.NumericUpDown();
+            this.label16 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -65,6 +68,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSetpoint)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMaxIAccum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numIZone)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRamp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numVel)).BeginInit();
@@ -88,12 +92,15 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cmdConnect);
             this.groupBox1.Controls.Add(this.cmdClearIAccum);
             this.groupBox1.Controls.Add(this.cmdApply);
             this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.numSetpoint);
+            this.groupBox1.Controls.Add(this.numMaxIAccum);
             this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Controls.Add(this.numIZone);
+            this.groupBox1.Controls.Add(this.label16);
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.label11);
@@ -128,22 +135,32 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Gain Tuning";
             // 
+            // cmdConnect
+            // 
+            this.cmdConnect.Location = new System.Drawing.Point(11, 1131);
+            this.cmdConnect.Name = "cmdConnect";
+            this.cmdConnect.Size = new System.Drawing.Size(318, 59);
+            this.cmdConnect.TabIndex = 18;
+            this.cmdConnect.Text = "Connect";
+            this.cmdConnect.UseVisualStyleBackColor = true;
+            this.cmdConnect.Click += new System.EventHandler(this.cmdConnect_Click);
+            // 
             // cmdClearIAccum
             // 
-            this.cmdClearIAccum.Location = new System.Drawing.Point(11, 781);
+            this.cmdClearIAccum.Location = new System.Drawing.Point(11, 823);
             this.cmdClearIAccum.Name = "cmdClearIAccum";
             this.cmdClearIAccum.Size = new System.Drawing.Size(318, 59);
-            this.cmdClearIAccum.TabIndex = 5;
+            this.cmdClearIAccum.TabIndex = 17;
             this.cmdClearIAccum.Text = "Clear I Accumulator";
             this.cmdClearIAccum.UseVisualStyleBackColor = true;
             this.cmdClearIAccum.Click += new System.EventHandler(this.cmdClearIAccum_Click);
             // 
             // cmdApply
             // 
-            this.cmdApply.Location = new System.Drawing.Point(11, 397);
+            this.cmdApply.Location = new System.Drawing.Point(11, 439);
             this.cmdApply.Name = "cmdApply";
             this.cmdApply.Size = new System.Drawing.Size(318, 59);
-            this.cmdApply.TabIndex = 5;
+            this.cmdApply.TabIndex = 10;
             this.cmdApply.Text = "Apply";
             this.cmdApply.UseVisualStyleBackColor = true;
             this.cmdApply.Click += new System.EventHandler(this.cmdApply_Click);
@@ -151,7 +168,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(6, 713);
+            this.label14.Location = new System.Drawing.Point(6, 755);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(148, 25);
             this.label14.TabIndex = 3;
@@ -160,7 +177,7 @@
             // numSetpoint
             // 
             this.numSetpoint.DecimalPlaces = 6;
-            this.numSetpoint.Location = new System.Drawing.Point(173, 339);
+            this.numSetpoint.Location = new System.Drawing.Point(173, 376);
             this.numSetpoint.Maximum = new decimal(new int[] {
             276447232,
             23283,
@@ -168,12 +185,25 @@
             0});
             this.numSetpoint.Name = "numSetpoint";
             this.numSetpoint.Size = new System.Drawing.Size(156, 31);
-            this.numSetpoint.TabIndex = 3;
+            this.numSetpoint.TabIndex = 9;
+            // 
+            // numMaxIAccum
+            // 
+            this.numMaxIAccum.DecimalPlaces = 6;
+            this.numMaxIAccum.Location = new System.Drawing.Point(173, 339);
+            this.numMaxIAccum.Maximum = new decimal(new int[] {
+            276447232,
+            23283,
+            0,
+            0});
+            this.numMaxIAccum.Name = "numMaxIAccum";
+            this.numMaxIAccum.Size = new System.Drawing.Size(156, 31);
+            this.numMaxIAccum.TabIndex = 8;
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 676);
+            this.label13.Location = new System.Drawing.Point(6, 718);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(142, 25);
             this.label13.TabIndex = 3;
@@ -190,12 +220,21 @@
             0});
             this.numIZone.Name = "numIZone";
             this.numIZone.Size = new System.Drawing.Size(156, 31);
-            this.numIZone.TabIndex = 3;
+            this.numIZone.TabIndex = 7;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 378);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(97, 25);
+            this.label16.TabIndex = 0;
+            this.label16.Text = "Setpoint:";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 639);
+            this.label12.Location = new System.Drawing.Point(6, 681);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(108, 25);
             this.label12.TabIndex = 3;
@@ -206,14 +245,14 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(6, 341);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(97, 25);
+            this.label9.Size = new System.Drawing.Size(141, 25);
             this.label9.TabIndex = 0;
-            this.label9.Text = "Setpoint:";
+            this.label9.Text = "Max I Accum:";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 602);
+            this.label11.Location = new System.Drawing.Point(6, 644);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(139, 25);
             this.label11.TabIndex = 3;
@@ -235,15 +274,15 @@
             0});
             this.numRamp.Name = "numRamp";
             this.numRamp.Size = new System.Drawing.Size(156, 31);
-            this.numRamp.TabIndex = 3;
+            this.numRamp.TabIndex = 6;
             // 
             // txtIAccum
             // 
-            this.txtIAccum.Location = new System.Drawing.Point(163, 710);
+            this.txtIAccum.Location = new System.Drawing.Point(163, 752);
             this.txtIAccum.Name = "txtIAccum";
             this.txtIAccum.ReadOnly = true;
             this.txtIAccum.Size = new System.Drawing.Size(166, 31);
-            this.txtIAccum.TabIndex = 2;
+            this.txtIAccum.TabIndex = 16;
             // 
             // label8
             // 
@@ -256,11 +295,11 @@
             // 
             // txtAverageDev
             // 
-            this.txtAverageDev.Location = new System.Drawing.Point(163, 673);
+            this.txtAverageDev.Location = new System.Drawing.Point(163, 715);
             this.txtAverageDev.Name = "txtAverageDev";
             this.txtAverageDev.ReadOnly = true;
             this.txtAverageDev.Size = new System.Drawing.Size(166, 31);
-            this.txtAverageDev.TabIndex = 2;
+            this.txtAverageDev.TabIndex = 15;
             // 
             // numVel
             // 
@@ -273,15 +312,15 @@
             0});
             this.numVel.Name = "numVel";
             this.numVel.Size = new System.Drawing.Size(156, 31);
-            this.numVel.TabIndex = 3;
+            this.numVel.TabIndex = 5;
             // 
             // txtDeviation
             // 
-            this.txtDeviation.Location = new System.Drawing.Point(163, 636);
+            this.txtDeviation.Location = new System.Drawing.Point(163, 678);
             this.txtDeviation.Name = "txtDeviation";
             this.txtDeviation.ReadOnly = true;
             this.txtDeviation.Size = new System.Drawing.Size(166, 31);
-            this.txtDeviation.TabIndex = 2;
+            this.txtDeviation.TabIndex = 14;
             // 
             // label7
             // 
@@ -294,11 +333,11 @@
             // 
             // txtActualVal
             // 
-            this.txtActualVal.Location = new System.Drawing.Point(163, 599);
+            this.txtActualVal.Location = new System.Drawing.Point(163, 641);
             this.txtActualVal.Name = "txtActualVal";
             this.txtActualVal.ReadOnly = true;
             this.txtActualVal.Size = new System.Drawing.Size(166, 31);
-            this.txtActualVal.TabIndex = 2;
+            this.txtActualVal.TabIndex = 13;
             // 
             // numAccel
             // 
@@ -311,12 +350,12 @@
             0});
             this.numAccel.Name = "numAccel";
             this.numAccel.Size = new System.Drawing.Size(156, 31);
-            this.numAccel.TabIndex = 3;
+            this.numAccel.TabIndex = 4;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(6, 528);
+            this.label15.Location = new System.Drawing.Point(6, 570);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(151, 25);
             this.label15.TabIndex = 3;
@@ -325,7 +364,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 565);
+            this.label10.Location = new System.Drawing.Point(6, 607);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(153, 25);
             this.label10.TabIndex = 3;
@@ -342,19 +381,19 @@
             // 
             // txtSysName
             // 
-            this.txtSysName.Location = new System.Drawing.Point(163, 525);
+            this.txtSysName.Location = new System.Drawing.Point(163, 567);
             this.txtSysName.Name = "txtSysName";
             this.txtSysName.ReadOnly = true;
             this.txtSysName.Size = new System.Drawing.Size(166, 31);
-            this.txtSysName.TabIndex = 2;
+            this.txtSysName.TabIndex = 11;
             // 
             // txtDesiredVal
             // 
-            this.txtDesiredVal.Location = new System.Drawing.Point(163, 562);
+            this.txtDesiredVal.Location = new System.Drawing.Point(163, 604);
             this.txtDesiredVal.Name = "txtDesiredVal";
             this.txtDesiredVal.ReadOnly = true;
             this.txtDesiredVal.Size = new System.Drawing.Size(166, 31);
-            this.txtDesiredVal.TabIndex = 2;
+            this.txtDesiredVal.TabIndex = 12;
             // 
             // numkF
             // 
@@ -399,7 +438,7 @@
             0});
             this.numkD.Name = "numkD";
             this.numkD.Size = new System.Drawing.Size(156, 31);
-            this.numkD.TabIndex = 3;
+            this.numkD.TabIndex = 2;
             // 
             // label4
             // 
@@ -426,7 +465,7 @@
             0});
             this.numkI.Name = "numkI";
             this.numkI.Size = new System.Drawing.Size(156, 31);
-            this.numkI.TabIndex = 3;
+            this.numkI.TabIndex = 1;
             // 
             // label3
             // 
@@ -462,7 +501,7 @@
             0});
             this.numkP.Name = "numkP";
             this.numkP.Size = new System.Drawing.Size(156, 31);
-            this.numkP.TabIndex = 3;
+            this.numkP.TabIndex = 0;
             // 
             // label1
             // 
@@ -489,6 +528,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSetpoint)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMaxIAccum)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numIZone)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRamp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numVel)).EndInit();
@@ -511,7 +551,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown numkD;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown numSetpoint;
+        private System.Windows.Forms.NumericUpDown numMaxIAccum;
         private System.Windows.Forms.NumericUpDown numIZone;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown numRamp;
@@ -537,6 +577,9 @@
         private System.Windows.Forms.Button cmdClearIAccum;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox txtSysName;
+        private System.Windows.Forms.NumericUpDown numSetpoint;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Button cmdConnect;
     }
 }
 
