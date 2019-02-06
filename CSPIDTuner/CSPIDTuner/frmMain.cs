@@ -168,12 +168,14 @@ namespace CSPIDTuner
                     Title = "Actual Output",
                     Values = actualPoints,
                     PointGeometry = null,
+                    DataLabels = false,
                 },
                 new GLineSeries
                 {
                     Title = "Requested Output",
                     Values = requestedPoints,
                     PointGeometry = null,
+                    DataLabels = false,
                 }
             };
 
@@ -190,6 +192,9 @@ namespace CSPIDTuner
             });
 
             pidChart.LegendLocation = LegendLocation.Right;
+            pidChart.DisableAnimations = true;
+            pidChart.DataTooltip = null;
+            pidChart.Hoverable = false;
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
