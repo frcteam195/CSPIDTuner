@@ -177,15 +177,26 @@
             // numSetpoint
             // 
             this.numSetpoint.DecimalPlaces = 6;
+            this.numSetpoint.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numSetpoint.Location = new System.Drawing.Point(173, 376);
             this.numSetpoint.Maximum = new decimal(new int[] {
             276447232,
             23283,
             0,
             0});
+            this.numSetpoint.Minimum = new decimal(new int[] {
+            276447232,
+            23283,
+            0,
+            -2147483648});
             this.numSetpoint.Name = "numSetpoint";
             this.numSetpoint.Size = new System.Drawing.Size(156, 31);
             this.numSetpoint.TabIndex = 9;
+            this.numSetpoint.ValueChanged += new System.EventHandler(this.numSetpoint_ValueChanged);
             // 
             // numMaxIAccum
             // 

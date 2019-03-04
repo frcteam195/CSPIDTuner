@@ -254,5 +254,10 @@ namespace CSPIDTuner
         {
             sendIAccumReset();
         }
+
+        private void numSetpoint_ValueChanged(object sender, EventArgs e)
+        {
+            cmdApply_Click(sender, e);
+        }
     }
 }
