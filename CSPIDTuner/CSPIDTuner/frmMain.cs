@@ -14,7 +14,7 @@ using LiveCharts.Wpf; //The WPF controls
 using LiveCharts.WinForms; //the WinForm wrappers
 using System.Windows.Media;
 using System.Threading;
-using SharpOSC;
+using SharperOSC;
 using System.Diagnostics;
 
 namespace CSPIDTuner

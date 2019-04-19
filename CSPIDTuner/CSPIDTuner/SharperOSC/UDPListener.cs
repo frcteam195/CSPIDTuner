@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Threading;
 
-namespace SharpOSC
+namespace SharperOSC
 {
 	public delegate void HandleOscPacket(OscPacket packet);
 	public delegate void HandleBytePacket(byte[] packet);
@@ -175,7 +175,7 @@ namespace SharpOSC
 
 			lock (queue)
 			{
-				if (queue.Count() > 0)
+				if (queue.Count > 0)
 				{
 					byte[] bytes = queue.Dequeue();
 					return bytes;

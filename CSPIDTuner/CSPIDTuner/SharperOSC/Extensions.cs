@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SharpOSC
+namespace SharperOSC
 {
 	internal static class Extensions
 	{
@@ -46,7 +46,7 @@ namespace SharpOSC
 		public static T[] SubArray<T>(this T[] data, int index, int length)
 		{
 			T[] result = new T[length];
-			Array.Copy(data, index, result, 0, length);
+			System.Array.Copy(data, index, result, 0, length);
 			return result;
 		}
 	}
